@@ -52,7 +52,8 @@ for i, msg in enumerate(history["mapping"]):
     chat_messages = {}
     try:
         role = history["mapping"][msg]["message"]["author"]["role"]
-        chat_messages[history["mapping"][msg]["id"]] = history["mapping"][msg]["message"]["content"]["parts"][0].encode('raw_unicode_escape').decode()
+        print(history["mapping"][msg]["message"]["content"]["parts"][0].encode('raw_unicode_escape'))
+        chat_messages[history["mapping"][msg]["id"]] = history["mapping"][msg]["message"]["content"]["parts"][0].encode('raw_unicode_escape').decode('raw_unicode_escape')
         chat_messages_array.append(chat_messages)
         print(chat_messages_array)
     except KeyError:
@@ -126,10 +127,14 @@ def MultilineInput(prompt):
 
 
 # %%
+import time
+
+# %%
 len(messages)
 
 # %%
 for message in messages:
+    time.sleep(30)
     ask_sync(message, conversation_id, None)
 
 # %%
