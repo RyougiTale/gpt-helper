@@ -43,6 +43,7 @@ print(history["current_node"])
 
 # %%
 chat_messages_array = []
+# print(history)
 for i, msg in enumerate(history["mapping"]):
     print(str(i+1) + " / " + str(len(history["mapping"])) + " :")
     print(history["mapping"][msg]["id"])
@@ -50,16 +51,18 @@ for i, msg in enumerate(history["mapping"]):
     print(history["mapping"][msg]["children"])
     chat_messages = {}
     try:
-        role = history["mapping"][msg]["message"]["role"]
+        role = history["mapping"][msg]["message"]["author"]["role"]
         chat_messages[history["mapping"][msg]["id"]] = history["mapping"][msg]["message"]["content"]["parts"][0].encode('raw_unicode_escape').decode()
         chat_messages_array.append(chat_messages)
+        print(chat_messages_array)
     except KeyError:
         print("Role does not exist for this message.")
     except TypeError:
         print("There is no message")
 
+
 # %%
-print()
+print(chat_messages_array)
 for i, chat_messages in enumerate(chat_messages_array):
     print(str(i+1) + " / " + str(len(history["mapping"])) + " :")
     print(chat_messages)
@@ -99,7 +102,19 @@ def ask(prompt, conversation_id, parent_id):
 
 
 # %%
-ask("write a python hello world", conversation_id, parent_id)
+def ask_sync(prompt, conversation_id, parent_id):
+    response = ""
+    for data in chatbot.ask(
+        prompt,
+        conversation_id=conversation_id,  # "6f771f73-2f55-43fd-851d-ba389d6ea1e2"
+        parent_id=parent_id  # "1cf849ce-3376-4539-ae8d-993751ca65e2"
+    ):
+        response = data["message"]
+    print("response:")
+    print(response)
+
+# %%
+ask_sync("write a python hello world", conversation_id, None)
 
 # %%
 def rollback(num):
@@ -109,6 +124,13 @@ def rollback(num):
 def MultilineInput(prompt):
     chatbot.get_intput(prompt)
 
+
+# %%
+len(messages)
+
+# %%
+for message in messages:
+    ask_sync(message, conversation_id, None)
 
 # %%
 

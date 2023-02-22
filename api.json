@@ -1,12 +1,4 @@
-import json
-# read json from file
-
-def read_from_file(file_name):
-    with open(file_name, "r") as f:
-        data = json.load(f)
-        return data
-
-apis = [["$(selector)", "Runs document.querySelector within the page. If no element matches the selector, the return value resolves to null."],
+[["$(selector)", "Runs document.querySelector within the page. If no element matches the selector, the return value resolves to null."],
 ["$$(selector)", "The method runs document.querySelectorAll within the page. If no elements match the selector, the return value resolves to []."],
 ["$$eval(selector, pageFunction, args)", "This method runs Array.from(document.querySelectorAll(selector)) within the page and passes the result as the first argument to the pageFunction."],
 ["$eval(selector, pageFunction, args)", "This method runs document.querySelector within the page and passes the result as the first argument to the pageFunction."],
@@ -86,9 +78,3 @@ apis = [["$(selector)", "Runs document.querySelector within the page. If no elem
 ["waitForRequest(urlOrPredicate, options)", ""],
 ["waitForResponse(urlOrPredicate, options)", ""],
 ["waitForSelector(selector, options)", "Wait for the selector to appear in page. If at the moment of calling the method the selector already exists, the method will return immediately. If the selector doesn't appear after the timeout milliseconds of waiting, the function will throw."]]
-
-target = "puppeteer"
-
-messages = list(map(lambda api: f"I'm a beginner of {target}, {'I already know that ' + api[1] + ', ' if api[1] != '' else ''}and I want to learn to use the api {api[0]} of {target}. Don't say extra words like conclustion, all I need is 1.the short descripsion of usage of {api[0]} and 2.an example code of {api[0]} in basic situation, and 3.is there any other api has relationships with {api[0]}, tell me the relationship.", apis))
-print(messages)
-print(len(messages))

@@ -12,3 +12,4 @@ create `config.json` and write your config
 
 # dependency
 https://github.com/acheong08/ChatGPT/wiki/V1
+https://github.com/acheong08/ChatGPT-lite
