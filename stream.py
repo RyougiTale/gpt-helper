@@ -1,6 +1,14 @@
 # %%
 from revChatGPT.V1 import Chatbot
 from Util import *
+import time
+import sys
+
+# redirect to file
+# with open('./output.log', 'w') as f:
+#     sys.stdout = f
+f = open('./output.log', 'w')
+sys.stdout = f
 
 # read config from file
 myconfig = read_from_file('config.json')
@@ -110,8 +118,9 @@ def ask_sync(prompt, conversation_id, parent_id):
         conversation_id=conversation_id,  # "6f771f73-2f55-43fd-851d-ba389d6ea1e2"
         parent_id=parent_id  # "1cf849ce-3376-4539-ae8d-993751ca65e2"
     ):
+        # print(data)
         response = data["message"]
-    print("response:")
+    # print("response:")
     print(response)
 
 # %%
@@ -127,15 +136,41 @@ def MultilineInput(prompt):
 
 
 # %%
-import time
+_title = "opengl"
+print(_title)
+_apis = read_from_file('opengl_api.json')
+print(_apis)
 
 # %%
-len(messages)
+# loop_question()
+def loop_question(_title, _apis):
+    count = len(_apis)
+    print("count: ", count)
+    all_questions = make_questions(_title, _apis)
+    for i, message in enumerate(all_questions):
+        print("cur: ", i, "/", "count: ", count)
+        try:
+            time.sleep(45)
+            print(message)
+            print(flush=True)
+            ask_sync(message, conversation_id, None)
+            print(flush=True)
+        except:
+            print("error occurs, maybe banned in 1 hour", flush=True)
+            time.sleep(3601)
+            print(message)
+            print(flush=True)
+            ask_sync(message, conversation_id, None)
+            print(flush=True)
+
 
 # %%
-for message in messages:
-    time.sleep(30)
-    ask_sync(message, conversation_id, None)
+# for i, message in enumerate(make_questions(_title, _apis)):
+#     print(i, message)
+
+# %%
+
+loop_question(_title, _apis)
 
 # %%
 
